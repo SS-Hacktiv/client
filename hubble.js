@@ -22,7 +22,9 @@ function getHubble(){
                                     <img class="card-img-top" src="${imageUrl}" alt="Card image cap">
                                     <div class="card-body">
                                     <h5 class="card-title">${item.name}</h5>
-    
+                                    <div class="fb-share-button" data-href="${imageUrl}" data-layout="button"
+                                        data-size="small" data-mobile-iframe="true"><a target="_blank" class="fb-xfbml-parse-ignore">Share</a></div>
+                                    <div>
                                     </div>
                                 </div>
                
@@ -38,6 +40,7 @@ function getHubble(){
 }
 
 $('#toSpaceX').on('click', function(e){
+    $('#homepage').hide()
     e.preventDefault()
     $.ajax({
         method: 'get',

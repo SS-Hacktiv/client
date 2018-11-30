@@ -133,6 +133,7 @@ function onSignIn(googleUser) {
             login()
         })
         .fail(err => {
+            console.log(err)
             alert(err)
         })
 }
@@ -150,3 +151,9 @@ function successCapcai() {
     checkCapcai = true
 }
 checkRecaptcha()
+
+$('#loginTrigger').submit(function(e){
+    e.preventDefault()
+    console.log('haloo');
+    login()
+})
