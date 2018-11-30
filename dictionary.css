@@ -1,0 +1,39 @@
+#dictWord {
+    font-size: 24px
+}
+
+.dictContent {
+    margin: 10px;
+    border: 1px solid lightslategray;
+    padding: 10px
+}
+.pronounciation {
+    margin-bottom: 5px;
+    color: lightslategray 
+}
+.speech {
+    margin-bottom: 5px;
+    color: slategray
+}
+#dictionary {
+    margin-top: 10px
+}
+#dict_loading {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+  
+@-webkit-keyframes spin {
+0% { -webkit-transform: rotate(0deg); }
+100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
