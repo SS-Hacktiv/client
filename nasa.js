@@ -4,6 +4,7 @@ $(document).ready(() => {
         url: 'http://localhost:3000/nasa/apod'
     })
         .done(response => {
+            console.log(response, 'apod')
             $('#apod').append(`
             <div class="card mb-3">
                     <img class="card-img-top" src="${response.hdurl}" alt="Card image cap">
@@ -21,26 +22,7 @@ $(document).ready(() => {
         .fail(err => {
             console.log(err)
         })
-    // $.ajax({
-    //     method: 'GET',
-    //     url: 'http://localhost:3000/nasa/mars'
-    // })
-    //     .done(response => {
-    //         $('#mars').append(`
-    //         <div class="card mb-3">
-    //                 <img class="card-img-top" src="${response.hdurl}" alt="Card image cap">
-    //                 <div class="card-body">
-    //                     <h5 class="card-title">${response.title}</h5>
-    //                     <button class="btn" data-toggle="collapse" data-target="#explanation">Readmore</button>
-    //                         <div id="explanation" class="collapse"> 
-    //                         <p class="card-text" >${response.explanation}</p>
-    //                         </div>
-    //                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    //                 </div>
-    //             </div>
-    //         `)
-
-    //     })
+  
 
 })
 // $('.collapse').collapse()
@@ -64,12 +46,15 @@ $('#searchNasa').keyup(() => {
                   <div class="card-body">
                         <h5 class="card-title">${list.data[0].title}</h5> 
                         <p class="card-text" >${list.data[0].description}</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        
+                        
                      </div>
+                     <div class="fb-share-button" data-href="${list.links[0].href}" data-layout="button"
+                                        data-size="small" data-mobile-iframe="true"><a target="_blank" class="fb-xfbml-parse-ignore">Share</a></div>
+                                    <div>
                  </div>`)
 
                 })
-
             }
 
         })
