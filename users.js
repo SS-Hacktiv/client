@@ -1,13 +1,23 @@
+var checkCapcai = null
+
 function login () {
     let token = localStorage.getItem('token')
     if(token) {
+        $('#hasLogin').show()
         $('#loginForm').hide()
         $('#registerForm').hide()
+        $('#alertLogin').hide()
+        $('#alertRegister').hide()
     } else {
+        $('#hasLogin').hide()
         $('#loginForm').show()
         $('#registerForm').show()
+        $('#alertLogin').hide()
+        $('#alertRegister').hide()
     }
 }
+
+login()
 
 $('#loginForm').submit((event) => {
     event.preventDefault()
@@ -28,38 +38,48 @@ $('#loginForm').submit((event) => {
         login()
     })
     .fail(err => {
-        alert(err.responseJSON.msg)
+        $('#alertLogin').html(`<strong>${err.responseJSON.msg}</strong>`)
+        $('#alertLogin').show()
     })
 })
 
 $('#registerForm').submit((event) => {
     event.preventDefault()
-    let email = $('#registerEmail').val()
-    let name = $('#registerName').val()
-    let password = $('#registerPassword').val()
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost:3000/users/register',
-        dataType: 'json',
-        data: {
-            email: email,
-            name: name,
-            password: password
-        }
-    })
-    .done(data => {
-        alert('success register, now you can login')
-    })
-    .fail(err => {
-        if(err.responseJSON.err.errors) {
-            for(let key in err.responseJSON.err.errors) {
-                alert(err.responseJSON.err.errors[key].message)
+    if(checkCapcai !== true) {
+        $('#alertRegister').html(`<strong>get your capcai</strong>`)
+        $('#alertRegister').show()
+    } else {
+        let email = $('#registerEmail').val()
+        let name = $('#registerName').val()
+        let password = $('#registerPassword').val()
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/users/register',
+            dataType: 'json',
+            data: {
+                email: email,
+                name: name,
+                password: password
             }
-        } else {
-            console.log(err.responseJSON.err)
-            alert(err.responseJSON.err.errmsg)
-        }
-    })
+        })
+        .done(data => {
+            alert('success register, now you can login')
+        })
+        .fail(err => {
+            if(err.responseJSON.err.errors) {
+                $('#alertRegister').html('')
+                for(let key in err.responseJSON.err.errors) {
+                    $('#alertRegister').append(`<strong>${err.responseJSON.err.errors[key].message}</strong><br>`)
+                    $('#alertRegister').show()
+                }
+            } else {
+                console.log(err)
+                $('#alertRegister').html(`<strong>email duplicated</strong>`)
+                $('#alertRegister').show()
+            }
+        })
+    }
+    
 })
 
 
@@ -125,3 +145,8 @@ function signOut() {
     localStorage.clear()
     login()
 }
+
+function successCapcai() {
+    checkCapcai = true
+}
+checkRecaptcha()
