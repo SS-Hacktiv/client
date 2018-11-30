@@ -1,8 +1,8 @@
 var checkCapcai = null
 
-function login () {
+function login() {
     let token = localStorage.getItem('token')
-    if(token) {
+    if (token) {
         $('#hasLogin').show()
         $('#loginForm').hide()
         $('#registerForm').hide()
@@ -32,20 +32,20 @@ $('#loginForm').submit((event) => {
             password: password
         }
     })
-    .done(data => {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('email', email)
-        login()
-    })
-    .fail(err => {
-        $('#alertLogin').html(`<strong>${err.responseJSON.msg}</strong>`)
-        $('#alertLogin').show()
-    })
+        .done(data => {
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('email', email)
+            login()
+        })
+        .fail(err => {
+            $('#alertLogin').html(`<strong>${err.responseJSON.msg}</strong>`)
+            $('#alertLogin').show()
+        })
 })
 
 $('#registerForm').submit((event) => {
     event.preventDefault()
-    if(checkCapcai !== true) {
+    if (checkCapcai !== true) {
         $('#alertRegister').html(`<strong>get your capcai</strong>`)
         $('#alertRegister').show()
     } else {
@@ -62,30 +62,30 @@ $('#registerForm').submit((event) => {
                 password: password
             }
         })
-        .done(data => {
-            alert('success register, now you can login')
-        })
-        .fail(err => {
-            if(err.responseJSON.err.errors) {
-                $('#alertRegister').html('')
-                for(let key in err.responseJSON.err.errors) {
-                    $('#alertRegister').append(`<strong>${err.responseJSON.err.errors[key].message}</strong><br>`)
+            .done(data => {
+                alert('success register, now you can login')
+            })
+            .fail(err => {
+                if (err.responseJSON.err.errors) {
+                    $('#alertRegister').html('')
+                    for (let key in err.responseJSON.err.errors) {
+                        $('#alertRegister').append(`<strong>${err.responseJSON.err.errors[key].message}</strong><br>`)
+                        $('#alertRegister').show()
+                    }
+                } else {
+                    console.log(err)
+                    $('#alertRegister').html(`<strong>email duplicated</strong>`)
                     $('#alertRegister').show()
                 }
-            } else {
-                console.log(err)
-                $('#alertRegister').html(`<strong>email duplicated</strong>`)
-                $('#alertRegister').show()
-            }
-        })
+            })
     }
-    
+
 })
 
 
 function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
+    FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
     });
 }
 
@@ -99,12 +99,12 @@ function statusChangeCallback(response) {
             token: response.authResponse.accessToken
         }
     })
-    .done(data => {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('name', data.name)
-        localStorage.setItem('email', data.email)
-        login()
-    })
+        .done(data => {
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('name', data.name)
+            localStorage.setItem('email', data.email)
+            login()
+        })
     fail(err => {
         alert(err)
     })
@@ -126,21 +126,21 @@ function onSignIn(googleUser) {
             email: profile.getEmail()
         }
     })
-    .done(data => {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('email', data.email)
-        localStorage.setItem('name', data.name)
-        login()
-    })
-    .fail(err => {
-        alert(err)
-    })
+        .done(data => {
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('email', data.email)
+            localStorage.setItem('name', data.name)
+            login()
+        })
+        .fail(err => {
+            alert(err)
+        })
 }
 
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-      console.log('User signed out.');
+        console.log('User signed out.');
     });
     localStorage.clear()
     login()
